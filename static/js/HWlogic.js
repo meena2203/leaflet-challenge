@@ -29,15 +29,17 @@ var link = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.g
 
 // Get the GeoJSON data
 d3.json(link).then(function(data) {
-    // Creating a GeoJSON layer with the retrieved data, depth of the earth is the third coordinate for each earthquake
+    // Create a GeoJSON layer with the retrieved data 
     L.geoJson(data, {
         pointToLayer: function(feature, latlng) {
             return new L.CircleMarker(latlng, {
-                radius: feature.properties.mag*3, 
-                color: 'black',
-                fillColor: chooseColor(feature.geometry.coordinates[2]),
-                fillOpacity: 0.5,
-                weight: 0.2    
+              // Set radius to the magnitude of earthquake and multiply by 3 to make it visible
+              radius: feature.properties.mag*3, 
+              color: 'black',
+              // Set the fill color to the depth of the earthquake (depth of the earth is the third coordinate for each earthquake)
+              fillColor: chooseColor(feature.geometry.coordinates[2]),
+              fillOpacity: 0.5,
+              weight: 0.2    
             });
         },
 
